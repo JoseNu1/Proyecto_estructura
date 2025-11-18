@@ -1,0 +1,48 @@
+public class ArbolBinario {
+
+    private Doctor raiz;
+
+    public void insertar(int id, String nombre, String especialidad) {
+        raiz = insertarRec(raiz, id, nombre, especialidad);
+    }
+
+    private Doctor insertarRec(Doctor actual, int id, String nombre, String especialidad) {
+        if (actual == null) {
+            return new Doctor(id, nombre, especialidad);
+        }
+
+        if (id < actual.id) {
+            actual.izquierda = insertarRec(actual.izquierda, id, nombre, especialidad);
+        } else {
+            actual.derecha = insertarRec(actual.derecha, id, nombre, especialidad);
+        }
+
+        return actual;
+    }
+
+    public Doctor buscar(int id) {
+        return buscarRec(raiz, id);
+    }
+
+    private Doctor buscarRec(Doctor actual, int id) {
+        if (actual == null || actual.id == id)
+            return actual;
+
+        if (id < actual.id)
+            return buscarRec(actual.izquierda, id);
+        else
+            return buscarRec(actual.derecha, id);
+    }
+
+    public void mostrarInOrden() {
+        inOrden(raiz);
+    }
+
+    private void inOrden(Doctor d) {
+        if (d != null) {
+            inOrden(d.izquierda);
+            System.out.println(d.id + " - " + d.nombre + " (" + d.especialidad + ")");
+            inOrden(d.derecha);
+        }
+    }
+}
