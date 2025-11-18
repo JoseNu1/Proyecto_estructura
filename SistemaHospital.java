@@ -1,37 +1,42 @@
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class SistemaHospital {
+    java.util.PriorityQueue<Paciente> colaPacientes = new java.util.PriorityQueue<>();
 
-    Queue<Paciente> colaPacientes = new LinkedList<>();
+    private static final String[] ESPECIALIDADES = {"Cardiología", "Neurología", "Dermatología", "Ginecología"};
+    private static final String[] NOMBRES_DOCTORES = {"Ovando", "Santander", "Alfonsi", "Rodriguez"};
+
+    public void inicializarDoctores() {
+        for (int i = 0; i < ESPECIALIDADES.length; i++) {
+            arbolBinario.insertar(i + 1, NOMBRES_DOCTORES[i], ESPECIALIDADES[i]);
+        }
+    }
     ArbolBinario arbolBinario = new ArbolBinario();
 
-    // Registrar paciente en la cola
     public void registrarPaciente(Paciente p) {
         colaPacientes.add(p);
         System.out.println("Paciente agregado a la cola.");
     }
 
-    // Atender paciente
-    public void atenderPaciente(int idDoctor) {
+    private int turnoDoctor = 0;
+    public void atenderPaciente() {
         if (colaPacientes.isEmpty()) {
             System.out.println("No hay pacientes en espera.");
             return;
         }
 
-        Doctor doctor = arbolBinario.buscar(idDoctor);
-
+        String especialidad = ESPECIALIDADES[turnoDoctor % ESPECIALIDADES.length];
+        Doctor doctor = arbolBinario.buscarPorEspecialidad(especialidad);
+        turnoDoctor++;
         if (doctor == null) {
-            System.out.println("El doctor no existe.");
+            System.out.println("No hay doctor disponible para " + especialidad);
             return;
         }
 
         Paciente p = colaPacientes.poll();
-        System.out.println("Atendiendo a: " + p.getNombre() + " con el Dr. " + doctor.nombre);
+        System.out.println("Atendiendo a: " + p.getNombre() + " (Edad: " + p.getEdad() + ", Prioridad: " + p.getPrioridad() + ") con el Dr. " + doctor.nombre + " (" + doctor.especialidad + ")");
         p.agregarHistorial("Atendido por " + doctor.nombre + " (" + doctor.especialidad + ")");
     }
 
-    // Mostrar pacientes en espera
     public void mostrarCola() {
         if (colaPacientes.isEmpty()) {
             System.out.println("La cola está vacía.");
