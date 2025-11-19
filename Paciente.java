@@ -13,13 +13,12 @@ public class Paciente implements Comparable<Paciente> {
         this.nombre = nombre;
         this.edad = edad;
         this.historial = new LinkedList<>();
-        // Prioridad por edad
         if (edad >= 65) {
-            this.prioridad = 3; // Alta
+            this.prioridad = 3; 
         } else if (edad <= 12) {
-            this.prioridad = 2; // Media
+            this.prioridad = 2; 
         } else {
-            this.prioridad = 1; // Baja
+            this.prioridad = 1; 
         }
     }
 
@@ -44,7 +43,6 @@ public class Paciente implements Comparable<Paciente> {
 
     @Override
     public int compareTo(Paciente otro) {
-        // Prioridad mayor = más urgente
         return Integer.compare(otro.prioridad, this.prioridad);
     }
 }

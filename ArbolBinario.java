@@ -46,7 +46,6 @@ public class ArbolBinario {
         }
     }
 
-        // Buscar doctor por especialidad (devuelve el primero que encuentra)
         public Doctor buscarPorEspecialidad(String especialidad) {
             return buscarPorEspecialidadRec(raiz, especialidad);
         }

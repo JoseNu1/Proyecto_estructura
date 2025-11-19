@@ -32,7 +32,6 @@ public class Main {
                     int edad = sc.nextInt();
                     sc.nextLine();
 
-                    // Selección de especialidad
                     System.out.println("Seleccione el tipo de trato/especialidad:");
                     System.out.println("1. Cardiología (Ovando)");
                     System.out.println("2. Neurología (Santander)");
