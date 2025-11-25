@@ -49,18 +49,36 @@ public class Main {
                         default: especialidad = "Cardiología"; break;
                     }
 
-                    Paciente paciente = new Paciente(id, nombre, edad);
+                    Paciente paciente = new Paciente(id, nombre, edad, especialidad);
                     paciente.agregarHistorial("Solicita atención en " + especialidad);
-                    paciente.agregarHistorial("Doctor asignado: " + sistema.arbolBinario.buscarPorEspecialidad(especialidad).nombre);
+                    Doctor docAsignado = sistema.arbolBinario.buscarPorEspecialidad(especialidad);
+                    if (docAsignado != null) {
+                        paciente.agregarHistorial("Doctor asignado: " + docAsignado.nombre);
+                    }
                     sistema.registrarPaciente(paciente);
                     break;
 
                 case 2:
-                    sistema.mostrarCola();
+                    sistema.mostrarColas();
                     break;
 
                 case 3:
-                    sistema.atenderPaciente();
+                    System.out.println("Seleccione la especialidad a atender:");
+                    System.out.println("1. Cardiología");
+                    System.out.println("2. Neurología");
+                    System.out.println("3. Dermatología");
+                    System.out.println("4. Ginecología");
+                    System.out.print("Opción: ");
+                    int opAtender = sc.nextInt();
+                    sc.nextLine();
+                    String espAtender = "Cardiología";
+                    switch (opAtender) {
+                        case 1: espAtender = "Cardiología"; break;
+                        case 2: espAtender = "Neurología"; break;
+                        case 3: espAtender = "Dermatología"; break;
+                        case 4: espAtender = "Ginecología"; break;
+                    }
+                    sistema.atenderPaciente(espAtender);
                     break;
 
                 case 4:
@@ -72,18 +90,7 @@ public class Main {
                     System.out.print("Ingrese el ID del paciente: ");
                     int idBuscar = sc.nextInt();
                     sc.nextLine();
-                    boolean encontrado = false;
-                    for (Paciente p : sistema.colaPacientes) {
-                        if (p.getId() == idBuscar) {
-                            System.out.println("Historial médico de " + p.getNombre() + ":");
-                            p.mostrarHistorial();
-                            encontrado = true;
-                            break;
-                        }
-                    }
-                    if (!encontrado) {
-                        System.out.println("Paciente no encontrado en la cola.");
-                    }
+                    sistema.mostrarHistorialPaciente(idBuscar);
                     break;
                 case 6:
                     System.out.println("Saliendo...");

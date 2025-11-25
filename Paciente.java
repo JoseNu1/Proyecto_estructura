@@ -7,18 +7,20 @@ public class Paciente implements Comparable<Paciente> {
     private int prioridad;
 
     private LinkedList<String> historial;
+    private String especialidadSolicitada;
 
-    public Paciente(int id, String nombre, int edad) {
+    public Paciente(int id, String nombre, int edad, String especialidadSolicitada) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.historial = new LinkedList<>();
+        this.especialidadSolicitada = especialidadSolicitada;
         if (edad >= 65) {
-            this.prioridad = 3; 
+            this.prioridad = 3;
         } else if (edad <= 12) {
-            this.prioridad = 2; 
+            this.prioridad = 2;
         } else {
-            this.prioridad = 1; 
+            this.prioridad = 1;
         }
     }
 
@@ -26,6 +28,7 @@ public class Paciente implements Comparable<Paciente> {
     public String getNombre() { return nombre; }
     public int getEdad() { return edad; }
     public int getPrioridad() { return prioridad; }
+    public String getEspecialidadSolicitada() { return especialidadSolicitada; }
 
     public void agregarHistorial(String registro) {
         historial.add(registro);
