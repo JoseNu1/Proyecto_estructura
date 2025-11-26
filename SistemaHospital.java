@@ -21,7 +21,6 @@ public class SistemaHospital {
         }
     }
 
-    // Registrar sólo el perfil del paciente (no lo añade automáticamente a la cola)
     public void registrarPaciente(Paciente p) {
         if (registroPacientes.containsKey(p.getId())) {
             System.out.println("ID de paciente ya registrado. Use solicitarCita para agendar.");
@@ -31,7 +30,6 @@ public class SistemaHospital {
         System.out.println("Paciente registrado: " + p.getNombre());
     }
 
-    // Solicitar cita: añade un paciente existente a la cola de la especialidad
     public void solicitarCita(int idPaciente, String especialidad) {
         Paciente p = registroPacientes.get(idPaciente);
         if (p == null) {
@@ -75,7 +73,7 @@ public class SistemaHospital {
                 continue;
             }
             List<Paciente> lista = new ArrayList<>(cola);
-            Collections.sort(lista); // usa compareTo (prioridad)
+            Collections.sort(lista);
             for (Paciente p : lista) {
                 System.out.println("  - " + p.getNombre() + " (Edad: " + p.getEdad() + ", Prioridad: " + p.getPrioridad() + ")");
             }

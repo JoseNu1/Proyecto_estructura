@@ -46,15 +46,15 @@ public class ArbolBinario {
         }
     }
 
-        public Doctor buscarPorEspecialidad(String especialidad) {
-            return buscarPorEspecialidadRec(raiz, especialidad);
-        }
+    public Doctor buscarPorEspecialidad(String especialidad) {
+        return buscarPorEspecialidadRec(raiz, especialidad);
+    }
 
-        private Doctor buscarPorEspecialidadRec(Doctor actual, String especialidad) {
-            if (actual == null) return null;
-            if (actual.especialidad.equalsIgnoreCase(especialidad)) return actual;
-            Doctor izq = buscarPorEspecialidadRec(actual.izquierda, especialidad);
-            if (izq != null) return izq;
-            return buscarPorEspecialidadRec(actual.derecha, especialidad);
-        }
+    private Doctor buscarPorEspecialidadRec(Doctor actual, String especialidad) {
+        if (actual == null) return null;
+        if (actual.especialidad.equalsIgnoreCase(especialidad)) return actual;
+        Doctor izq = buscarPorEspecialidadRec(actual.izquierda, especialidad);
+        if (izq != null) return izq;
+        return buscarPorEspecialidadRec(actual.derecha, especialidad);
+    }
 }
