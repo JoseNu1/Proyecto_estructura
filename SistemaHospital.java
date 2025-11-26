@@ -21,16 +21,32 @@ public class SistemaHospital {
         }
     }
 
+    // Registrar sólo el perfil del paciente (no lo añade automáticamente a la cola)
     public void registrarPaciente(Paciente p) {
+        if (registroPacientes.containsKey(p.getId())) {
+            System.out.println("ID de paciente ya registrado. Use solicitarCita para agendar.");
+            return;
+        }
         registroPacientes.put(p.getId(), p);
-        String esp = p.getEspecialidadSolicitada();
-        PriorityQueue<Paciente> cola = colasPorEspecialidad.get(esp);
+        System.out.println("Paciente registrado: " + p.getNombre());
+    }
+
+    // Solicitar cita: añade un paciente existente a la cola de la especialidad
+    public void solicitarCita(int idPaciente, String especialidad) {
+        Paciente p = registroPacientes.get(idPaciente);
+        if (p == null) {
+            System.out.println("Paciente con ID " + idPaciente + " no encontrado. Regístrelo primero.");
+            return;
+        }
+        p.agregarHistorial("Solicita atención en " + especialidad);
+        p.setEspecialidadSolicitada(especialidad);
+        PriorityQueue<Paciente> cola = colasPorEspecialidad.get(especialidad);
         if (cola == null) {
             cola = new PriorityQueue<>();
-            colasPorEspecialidad.put(esp, cola);
+            colasPorEspecialidad.put(especialidad, cola);
         }
         cola.add(p);
-        System.out.println("Paciente agregado a la cola de " + esp + ".");
+        System.out.println("Cita solicitada: " + p.getNombre() + " en " + especialidad);
     }
 
     public void atenderPaciente(String especialidad) {
@@ -46,7 +62,8 @@ public class SistemaHospital {
             return;
         }
         System.out.println("Atendiendo a: " + p.getNombre() + " (Edad: " + p.getEdad() + ", Prioridad: " + p.getPrioridad() + ") con el Dr. " + doctor.nombre + " (" + doctor.especialidad + ")");
-        p.agregarHistorial("Atendido por " + doctor.nombre + " (" + doctor.especialidad + ")");
+        p.agregarHistorial("Asignado al Dr. " + doctor.nombre + " (" + doctor.especialidad + ")");
+        p.agregarHistorial("Atendido por Dr. " + doctor.nombre + " (" + doctor.especialidad + ")");
     }
 
     public void mostrarColas() {

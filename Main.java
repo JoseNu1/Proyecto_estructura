@@ -16,7 +16,8 @@ public class Main {
             System.out.println("3. Atender paciente");
             System.out.println("4. Mostrar doctores");
             System.out.println("5. Mostrar historial médico de paciente");
-            System.out.println("6. Salir");
+            System.out.println("6. Solicitar cita para paciente registrado");
+            System.out.println("7. Salir");
             System.out.print("Opción: ");
             opcion = sc.nextInt();
             sc.nextLine();
@@ -32,29 +33,7 @@ public class Main {
                     int edad = sc.nextInt();
                     sc.nextLine();
 
-                    System.out.println("Seleccione el tipo de trato/especialidad:");
-                    System.out.println("1. Cardiología (Ovando)");
-                    System.out.println("2. Neurología (Santander)");
-                    System.out.println("3. Dermatología (Alfonsi)");
-                    System.out.println("4. Ginecología (Rodriguez)");
-                    System.out.print("Opción: ");
-                    int opcionEspecialidad = sc.nextInt();
-                    sc.nextLine();
-                    String especialidad = "";
-                    switch (opcionEspecialidad) {
-                        case 1: especialidad = "Cardiología"; break;
-                        case 2: especialidad = "Neurología"; break;
-                        case 3: especialidad = "Dermatología"; break;
-                        case 4: especialidad = "Ginecología"; break;
-                        default: especialidad = "Cardiología"; break;
-                    }
-
-                    Paciente paciente = new Paciente(id, nombre, edad, especialidad);
-                    paciente.agregarHistorial("Solicita atención en " + especialidad);
-                    Doctor docAsignado = sistema.arbolBinario.buscarPorEspecialidad(especialidad);
-                    if (docAsignado != null) {
-                        paciente.agregarHistorial("Doctor asignado: " + docAsignado.nombre);
-                    }
+                    Paciente paciente = new Paciente(id, nombre, edad, "");
                     sistema.registrarPaciente(paciente);
                     break;
 
@@ -93,11 +72,32 @@ public class Main {
                     sistema.mostrarHistorialPaciente(idBuscar);
                     break;
                 case 6:
+                    System.out.print("Ingrese el ID del paciente para solicitar cita: ");
+                    int idCita = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Seleccione la especialidad para la cita:");
+                    System.out.println("1. Cardiología");
+                    System.out.println("2. Neurología");
+                    System.out.println("3. Dermatología");
+                    System.out.println("4. Ginecología");
+                    System.out.print("Opción: ");
+                    int opEsp = sc.nextInt();
+                    sc.nextLine();
+                    String esp = "Cardiología";
+                    switch (opEsp) {
+                        case 1: esp = "Cardiología"; break;
+                        case 2: esp = "Neurología"; break;
+                        case 3: esp = "Dermatología"; break;
+                        case 4: esp = "Ginecología"; break;
+                    }
+                    sistema.solicitarCita(idCita, esp);
+                    break;
+                case 7:
                     System.out.println("Saliendo...");
                     break;
             }
 
-        } while (opcion != 6);
+        } while (opcion != 7);
         sc.close();
     }
 }
